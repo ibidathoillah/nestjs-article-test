@@ -11,6 +11,12 @@ import { BookModule } from '../book/book.module';
     TypeOrmModule.forFeature([UserRepository], 'postgres')
   ],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [
+    UserService
+  ],
+  exports: [
+    TypeOrmModule,
+    UserService
+  ]
 })
 export class UserModule {}
