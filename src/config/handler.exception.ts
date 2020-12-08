@@ -7,6 +7,7 @@ import {
     ValidationError,
     BadRequestException,
     UnauthorizedException,
+    UnprocessableEntityException,
   } from '@nestjs/common';
   
   @Catch()
@@ -35,6 +36,10 @@ import {
         case 'UnauthorizedException':
           status =  (<UnauthorizedException>exception).getStatus()
           message = (<UnauthorizedException>exception).message.message
+          break
+        case 'UnprocessableEntityException':
+          status =  (<UnprocessableEntityException>exception).getStatus()
+          message = (<UnprocessableEntityException>exception).message.message
           break
       }
       
