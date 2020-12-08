@@ -13,7 +13,7 @@ export class ArticleGuard implements CanActivate {
     const req = context.switchToHttp().getRequest();
     const user = req.user;
     const articleId = req.params.id;
-    const accessList = user.userAccesses.map(access => access.name);
+    const accessList = user.userAccesses.map(access => access.access.name);
     const roleList = user.userRoles.map(role => role.access.name);
 
 

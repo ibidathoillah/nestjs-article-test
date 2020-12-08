@@ -51,7 +51,7 @@ export class UserAccessService {
         }, {})
 
         return userAccesss.map(
-            userAccess => userAccess.access = accesssDetails[userAccess.accessId]
+            userAccess => Object.assign(userAccess, { access : accesssDetails[userAccess.accessId] })
         )
     }
 
