@@ -10,6 +10,7 @@ import {
     UnprocessableEntityException,
     ConflictException,
   } from '@nestjs/common';
+import { NotFoundException } from '@nestjs/common/exceptions/not-found.exception';
   
   @Catch()
   export class AllExceptionsFilter implements ExceptionFilter {
@@ -46,7 +47,10 @@ import {
           status =  (<ConflictException>exception).getStatus()
           message = (<ConflictException>exception).message.message
           break
-          
+        case 'NotFoundException':
+          status =  (<NotFoundException>exception).getStatus()
+          message = (<NotFoundException>exception).message.message
+          break
       }
       
       response.status(status).json({
