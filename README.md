@@ -33,7 +33,7 @@ the article object as response body.
 
 # Setup
 
-1. Database : `postgre`
+1. Database : `postgre` => https://hub.docker.com/_/postgres
 2. Postman documentation : https://documenter.getpostman.com/view/4064052/TVmS8vaX#9ff96a0c-a301-4aeb-96f9-750f7f44b357
 3. Postman collection : https://www.getpostman.com/collections/e2f8e7d0d9d5d73e7cb3
 
