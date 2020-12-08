@@ -14,7 +14,7 @@ export class ArticleGuard implements CanActivate {
     const user = req.user;
     const articleId = req.params.id;
     const accessList = user.userAccesses.map(access => access.name);
-    const roleList = user.userRoles.map(role => role.name);
+    const roleList = user.userRoles.map(role => role.access.name);
 
 
     if(roleList.indexOf('SystemAdmin')!=-1) return true;

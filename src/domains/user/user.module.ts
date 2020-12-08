@@ -5,10 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserRepository } from './user.repository';
 import { UserRoleModule } from '../role/user_role.module';
 import { UserAccessModule } from '../access/user_access.module';
+import { RoleAccessModule } from '../access/role_access.module';
 
 @Global()
 @Module({
   imports: [
+    RoleAccessModule,
     UserRoleModule,
     UserAccessModule,
     TypeOrmModule.forFeature([UserRepository], 'postgres')

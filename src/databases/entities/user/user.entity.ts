@@ -3,7 +3,6 @@ import { Transform, Exclude } from "class-transformer";
 import * as dayjs from "dayjs";
 import { Article } from "../article/article.entity";
 import { UserRole } from "../role/user_role.entity";
-import { RoleAccess } from "../access/role_access.entity";
 import { UserAccess } from "../access/user_access.entity";
 
 @Entity({
@@ -30,13 +29,13 @@ export class User extends BaseEntity {
     @Column({ type: 'varchar', length: 255 })
     gender: string
 
-    @OneToMany(() => Article, article => article.user)
+    @OneToMany(() => Article, article => article.user, { primary: true })
     articles: Article[]
 
-    @OneToMany(() => UserRole, userRoles => userRoles.user)
+    @OneToMany(() => UserRole, userRoles => userRoles.user, { primary: true })
     userRoles: UserRole[]
 
-    @OneToMany(() => UserAccess, userAccess => userAccess.user)
+    @OneToMany(() => UserAccess, userAccess => userAccess.user, { primary: true })
     userAccesses: UserAccess[]
 
     @Transform(date => dayjs(date).format('YYYY-MM-DD HH:mm:ss'))

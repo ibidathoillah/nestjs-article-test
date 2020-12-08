@@ -1,4 +1,4 @@
-import { Entity, BaseEntity, PrimaryGeneratedColumn, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, JoinColumn, ManyToOne, Column } from 'typeorm';
 import { Access } from './access.entity';
 import { Role } from '../role/role.entity';
 
@@ -11,6 +11,16 @@ export class RoleAccess extends BaseEntity {
         type: 'int'
     })
     id: number
+
+    @Column({
+        type: 'int',
+    })
+    roleId: number
+
+    @Column({
+        type: 'int',
+    })
+    accessId: number
 
     @ManyToOne(() => Role, role => role.roleAccesses, { 
         onUpdate: 'CASCADE',

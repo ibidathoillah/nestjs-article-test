@@ -8,6 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { UserRoleService } from '../role/user_role.service';
 import { GrantAccessUserDto } from './dto/grant-access';
 import { UserAccessService } from '../access/user_access.service';
+import { RoleAccessService } from '../access/role_access.service';
 
 @Injectable()
 export class UserService {
@@ -20,7 +21,7 @@ export class UserService {
         private userRoleService: UserRoleService,
 
         @Inject('UserAccessService')
-        private userAccessService: UserAccessService
+        private userAccessService: UserAccessService,
         
     ) {}
 
@@ -32,7 +33,9 @@ export class UserService {
         const salt = await bcrypt.genSalt()
         newUser.password = await bcrypt.hash(newUser.password, salt)
         const user = await this.userRepository.save(newUser)
-        await this.userRoleService.createUserRole(user.id);
+
+        const userRole = await this.userRoleService.initNewUserRole(user.id);
+        const userAccess = await this.userAccessService.initNewUserAccessByRole(user.id, userRole.roleId)
         
         return await this.getUserDetails(user.id)
     }
@@ -44,6 +47,13 @@ export class UserService {
         return await this.getUserDetails(user.id)
     }
 
+    async removeAccess(grantPayload: GrantAccessUserDto, userId: number): Promise<CollectUserDto> {
+        const user = await this.getById(userId)
+        await this.userAccessService.removeAccessUser(user.id, grantPayload.accessName);
+        
+        return await this.getUserDetails(user.id)
+    }
+    
     async getAllUser(): Promise<CollectUserDto[]> {
         const users = await this.userRepository.find()
         return users

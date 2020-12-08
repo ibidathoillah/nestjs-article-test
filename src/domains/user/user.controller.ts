@@ -1,4 +1,4 @@
-import { Controller, Get, Body, HttpCode, UsePipes, Param, ParseIntPipe, UseInterceptors, ClassSerializerInterceptor, Query, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, HttpCode, UsePipes, Param, ParseIntPipe, UseInterceptors, ClassSerializerInterceptor, Query, Put, UseGuards, Post, Delete } from '@nestjs/common';
 import { UserService } from './user.service';
 import { Validation } from 'src/config/validation.pipe';
 import { GrantAccessUserDto } from './dto/grant-access';
@@ -28,11 +28,18 @@ export class UserController {
     }
 
    
-    @Put(':id/grant-access') 
+    @Post(':id/grant-access') 
     @UseInterceptors(ClassSerializerInterceptor)
     @UsePipes(Validation)
     grantAccess(@Body() payload: GrantAccessUserDto, @Param('id', ParseIntPipe) id: number) {
         return this.userService.grantAccess(payload, id)
     }
 
+
+    @Delete(':id/remove-access') 
+    @UseInterceptors(ClassSerializerInterceptor)
+    @UsePipes(Validation)
+    removeAccess(@Body() payload: GrantAccessUserDto, @Param('id', ParseIntPipe) id: number) {
+        return this.userService.removeAccess(payload, id)
+    }
 }

@@ -8,7 +8,8 @@ export class UserGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const request = context.switchToHttp().getRequest();
     const user = request.user;
-    if(user.userRoles.filter(role => role.name === 'SystemAdmin').length > 0){
+    
+    if(user.userRoles.filter(role => role.access.name === 'SystemAdmin').length > 0){
       return true
     }
 

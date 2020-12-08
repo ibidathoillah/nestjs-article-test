@@ -15,7 +15,7 @@ export class UserRoleService {
         private roleService: RoleService,
     ) {}
     
-    async createUserRole(userId: number): Promise<UserRole> {
+    async initNewUserRole(userId: number): Promise<UserRole> {
         // New registered account will automatically have Account role
         return this.userRolesRepository.save({userId:userId, roleId: 2})
     }
@@ -29,7 +29,7 @@ export class UserRoleService {
         }, {})
 
         return userRoles.map(
-            userRole => userRole.role = rolesDetails[userRole.roleId]
+            userRole => Object.assign(userRole, { access : rolesDetails[userRole.roleId] })
         )
     }
     
