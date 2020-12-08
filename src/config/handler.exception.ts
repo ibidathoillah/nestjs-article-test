@@ -8,6 +8,7 @@ import {
     BadRequestException,
     UnauthorizedException,
     UnprocessableEntityException,
+    ConflictException,
   } from '@nestjs/common';
   
   @Catch()
@@ -41,6 +42,11 @@ import {
           status =  (<UnprocessableEntityException>exception).getStatus()
           message = (<UnprocessableEntityException>exception).message.message
           break
+        case 'ConflictException':
+          status =  (<ConflictException>exception).getStatus()
+          message = (<ConflictException>exception).message.message
+          break
+          
       }
       
       response.status(status).json({
