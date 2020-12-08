@@ -1,3 +1,78 @@
+# Notes Project Test
+
+Create a very simple blog API. Here is a list of definitions that will be used in this API:
+- administrator is a User that has a SystemAdmin Role and has all access.
+- account is a User that has an Account Role.
+The API have to fulfill these requirements:
+1. As a user, I can create a new account.
+- New registered account will automatically have Account role
+- Insert new row to user_roles
+- Fetch accesses that related to Account role, and associate those accesses
+with this new account that just created to user_accesses
+2. As a user, I can create a new article.
+- Article can be created only if logged in user has ArticleStore access.
+- Once new article is created, return response with HTTP code 201 created
+and the article object as response body.
+- If logged in account does not have ArticleStore access, return response with
+HTTP code 401 unauthorized.
+3. As an administrator, I can remove access from an account
+- the selected account will not have relation to selected access (delete data
+from user_accesses)
+- For example, it is possible that a user has Account role but doesn’t have
+ArticleStore access
+4. As an administrator, I can give a user ArticleAdminUpdate access
+- that user will be able to update article that not created by that user.
+5. As a user, I can update article.
+- If logged in account has ArticleOwnerUpdate access and if that article is
+created by logged in account, then article can be updated. Else, return
+response with HTTP code 401 unauthorized.
+- If logged in account has ArticleAdminUpdate access, then article can be
+updated. Else return response with HTTP code 401 unauthorized.
+- Once article is updated, return response with HTTP code 204 updated and
+the article object as response body.
+
+# Setup
+
+1. Database : `postgre` => https://hub.docker.com/_/postgres
+2. Postman documentation : https://documenter.getpostman.com/view/4064052/TVmS8vaX#9ff96a0c-a301-4aeb-96f9-750f7f44b357
+3. Postman collection : https://www.getpostman.com/collections/e2f8e7d0d9d5d73e7cb3
+
+# Seeder Detail
+
+1. Administrator
+
+        `{
+            id: 1,
+            fullName: "Ibid Admin",
+            email: "admin@admin.com",
+            password: await bcrypt.hash("admin",salt),
+            gender: "L"
+        }`
+        
+        `{
+            id: 2,
+            fullName: "Intotu Admin",
+            email: "intotu@gmail.com",
+            password: await bcrypt.hash("intotu",salt),
+            gender: "Laki"
+        }`
+        
+        `{
+            id: 3,
+            fullName: "Jaja Admin",
+            email: "jaja@gmail.com",
+            password: await bcrypt.hash("jaja",salt),
+            gender: "Laki"
+        }`
+2. Roles `SystemAdmin`, `Account`
+3. Access `ArticleStore`, `ArticleAdminUpdate`, `ArticleOwnerUpdate`
+4. RoleAccess (initizalize after new user registered)  `Account` => `ArticleStore`, `ArticleOwnerUpdate`
+
+
+
+
+# Thanks To Nestjs!
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
 </p>
